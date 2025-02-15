@@ -7,7 +7,7 @@
 std::string ft_capitalize(char *c_string)
 {
     std::string cpp_string = c_string; //alternative std::string cpp_string(c_string)
-    int i = 0;
+    size_t i = 0;
     while (i < cpp_string.length())
     {
         cpp_string[i] = std::toupper(cpp_string[i]); //part of cctype library
@@ -31,8 +31,6 @@ void megaphone(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-    int i(0); //constructor initialization
-
     if (argc == 1)
     {
         std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *\n";

@@ -6,7 +6,7 @@
 #    By: mzuloaga <mzuloaga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/15 09:02:20 by mzuloaga          #+#    #+#              #
-#    Updated: 2025/02/15 09:11:22 by mzuloaga         ###   ########.fr        #
+#    Updated: 2025/02/15 12:22:21 by mzuloaga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,10 @@ FLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = megaphone.cpp
 OBJ = $(SRC:.cpp=.o)
 NAME = megaphone
+
+# explicit rule to use my compiler and flags (if not stated it uses g++)
+%.o: %.cpp
+	$(CC) $(FLAGS) -c $< -o $@
 
 all: $(NAME)
 
