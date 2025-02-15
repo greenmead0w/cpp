@@ -1,4 +1,4 @@
-#include <iostream> //So I can use std namespace + cout/cin
+#include <iostream> //To use std namespace + cout/cin
 #include <string>
 #include <cctype>
 
@@ -22,8 +22,8 @@ void megaphone(int argc, char **argv)
     while(i < argc)
     {
         std::cout << ft_capitalize(argv[i]);
-        if (i < argc - 1)
-            std::cout << ' ';
+        // if (i < argc - 1)
+        //     std::cout << ' ';
         i++;
     }
     std::cout << std::endl;

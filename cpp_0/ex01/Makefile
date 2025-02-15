@@ -5,20 +5,21 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mzuloaga <mzuloaga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/15 09:02:20 by mzuloaga          #+#    #+#              #
-#    Updated: 2025/02/15 09:11:22 by mzuloaga         ###   ########.fr        #
+#    Created: 2025/02/15 09:02:47 by mzuloaga          #+#    #+#              #
+#    Updated: 2025/02/15 09:13:00 by mzuloaga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = megaphone.cpp
+SRC = Contact.cpp main.cpp utils.cpp Phonebook.cpp
 OBJ = $(SRC:.cpp=.o)
-NAME = megaphone
+INCLUDES = Contact.hpp Phonebook.hpp
+NAME = my_phonebook
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(INCLUDE)
 	@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
 
 clean:
