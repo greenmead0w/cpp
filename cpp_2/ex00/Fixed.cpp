@@ -7,8 +7,8 @@ Fixed::Fixed(void) : num(0) {
 }
 
 Fixed::Fixed(Fixed const &cpy) {
-    *this = cpy;
     std::cout << "Copy constructor called\n";
+    this->num = cpy.getRawBits(); //using getRawBits() to access private value
     return;
 }
 
@@ -17,7 +17,6 @@ Fixed::~Fixed(void) {
     return;
 }
 
-/*assignment operator overload*/
 Fixed & Fixed::operator=(Fixed const & val) {
     std::cout << "Copy assignment operator called\n";
     if (this != &val)

@@ -13,7 +13,7 @@ class Fixed {
         Fixed( void ); //default constructor
         Fixed( Fixed const &cpy ); //cpy constructor
         ~Fixed( void ); //destructor
-        Fixed & operator=(Fixed const &val);
+        Fixed & operator=(Fixed const &val); //copy assignment
         int getRawBits( void ) const;
         void setRawBits( int const raw );
 

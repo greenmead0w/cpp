@@ -3,7 +3,7 @@ FLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = main.cpp Fixed.cpp
 OBJ = $(SRC:.cpp=.o)
 INCLUDES = Fixed.hpp
-NAME = orthodox
+NAME = program
 
 # explicit rule to use my compiler and flags (if not stated it uses g++)
 %.o: %.cpp
