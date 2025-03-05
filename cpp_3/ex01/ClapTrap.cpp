@@ -1,24 +1,64 @@
 #include "ClapTrap.h"
 
+
+void ClapTrap::setName(std::string newName) {
+    name = newName;
+    return;
+}
+
+void ClapTrap::setHitPoints(unsigned int hp) {
+    hit_points = hp;
+    return;
+}
+
+void ClapTrap::setEnergyPoints(unsigned int ep) {
+    energy_points = ep;
+    return;
+}
+
+void ClapTrap::setDamage(unsigned int newDamage) {
+    damage = newDamage;
+    return;
+}
+
+std::string ClapTrap::getName(void) {
+    return name;
+}
+unsigned int ClapTrap::getHitPoints(void) {
+    return hit_points;
+}
+unsigned int ClapTrap::getEnergyPoints(void) {
+    return energy_points;
+}
+unsigned int ClapTrap::getDamage(void) {
+    return damage;
+}
+
+/*
+************
+****Ex00****
+************
+*/
+
 ClapTrap::ClapTrap(void) : name("default"), hit_points(10), energy_points(10), damage(0) {
-    std::cout << "Default constructor called\n";
+    std::cout << "ClapTrap. Default constructor called\n";
 }
 
 ClapTrap::ClapTrap(const std::string &_name) : name(_name), hit_points(10), energy_points(10), damage(0) {
-    std::cout << "Parametrized constructor called for " << name << '\n';
+    std::cout << "ClapTrap. Parametrized constructor called for " << name << '\n';
 }
 
 ClapTrap::ClapTrap(ClapTrap const &cpy) {
-    std::cout << "Copy constructor called for " << name << '\n';
+    std::cout << "ClapTrap. Copy constructor called for " << name << '\n';
     *this = cpy;
 }
 
 ClapTrap::~ClapTrap(void) {
-    std::cout << "Destructor called for " << name << '\n';
+    std::cout << "ClapTrap. Destructor called for " << name << '\n';
 }
 
 ClapTrap &ClapTrap::operator=(ClapTrap const &cpy) {
-    std::cout << "Copy assignment operator called for " << name << '\n';
+    std::cout << "ClapTrap. Copy assignment operator called for " << name << '\n';
     if (this != &cpy)
         this->hit_points = cpy.hit_points;
         this->energy_points = cpy.energy_points;
