@@ -31,10 +31,10 @@ class ClapTrap {
         void setDamage(unsigned int damage);
         
         //getters
-        std::string getName(void);
-        unsigned int getHitPoints(void);
-        unsigned int getEnergyPoints(void);
-        unsigned int getDamage(void); 
+        std::string getName(void) const;
+        unsigned int getHitPoints(void) const;
+        unsigned int getEnergyPoints(void) const;
+        unsigned int getDamage(void) const; 
         
 };
 

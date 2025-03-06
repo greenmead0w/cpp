@@ -5,6 +5,7 @@
 #include "ClapTrap.h"
 
 class ScavTrap : public ClapTrap {
+    
     public:
         ScavTrap(void);
         ScavTrap(const std::string &name);
