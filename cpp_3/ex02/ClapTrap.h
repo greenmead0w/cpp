@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzuloaga <mzuloaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/07 09:24:33 by mzuloaga          #+#    #+#             */
-/*   Updated: 2025/03/07 09:24:38 by mzuloaga         ###   ########.fr       */
+/*   Created: 2025/03/07 09:26:00 by mzuloaga          #+#    #+#             */
+/*   Updated: 2025/03/07 09:32:05 by mzuloaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <iostream>
 
 class ClapTrap {
-    private:
+    protected:
         std::string name;
         unsigned int hit_points;
         unsigned int energy_points;
@@ -35,6 +35,19 @@ class ClapTrap {
         void attack(const std::string& target);
         void takeDamage(unsigned int amount);
         void beRepaired(unsigned int amount);
+
+        //setters
+        void setName(std::string newName);
+        void setHitPoints(unsigned int hp);
+        void setEnergyPoints(unsigned int ep);
+        void setDamage(unsigned int damage);
+        
+        //getters
+        std::string getName(void) const;
+        unsigned int getHitPoints(void) const;
+        unsigned int getEnergyPoints(void) const;
+        unsigned int getDamage(void) const; 
+        
 };
 
 #endif
