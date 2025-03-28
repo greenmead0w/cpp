@@ -1,27 +1,27 @@
-#include "Form.h"
+#include "AForm.h"
 
 
-Form::Form(void) : name("default"), is_signed(false), grade_to_sign(150), grade_to_execute(150) {
-    std::cout << "Form default constructor\n";
+AForm::AForm(void) : name("default"), is_signed(false), grade_to_sign(150), grade_to_execute(150) {
+    std::cout << "AForm default constructor\n";
 }
 
-Form::Form(const Form &cpy)
+AForm::AForm(const AForm &cpy)
     :   name(cpy.name),
         is_signed(cpy.is_signed),
         grade_to_sign(cpy.grade_to_sign),
         grade_to_execute(cpy.grade_to_execute)
 {
-    std::cout << "Form copy constructor called\n";
+    std::cout << "AForm copy constructor called\n";
 }
 
-Form::Form(std::string name, int signGrade, int execGrade)
+AForm::AForm(std::string name, int signGrade, int execGrade)
     :   name(name),
         is_signed(false),
         grade_to_sign(signGrade),
         grade_to_execute(execGrade)
 
 {
-    std::cout << "Form parametrized constructor called\n";
+    std::cout << "AForm parametrized constructor called\n";
 
     if (signGrade < 1 || execGrade < 1)
 		throw GradeTooHighException();
@@ -29,11 +29,11 @@ Form::Form(std::string name, int signGrade, int execGrade)
 		throw GradeTooLowException();
 }
 
-Form::~Form(void) {
-    std::cout << "Form destructor called\n";
+AForm::~AForm(void) {
+    std::cout << "AForm destructor called\n";
 }
 
-Form &Form::operator=(const Form &cpy) {
+AForm &AForm::operator=(const AForm &cpy) {
 
     if (this != &cpy)
         this->is_signed = cpy.is_signed;
@@ -42,7 +42,7 @@ Form &Form::operator=(const Form &cpy) {
 
 }
 
-std::ostream &operator<<(std::ostream &out, const Form &form) {
+std::ostream &operator<<(std::ostream &out, const AForm &form) {
 
     out << "[FORM NAME]: " << form.getName();
     out << " [IS_SIGNED]: " << form.getIsSigned();
@@ -52,37 +52,37 @@ std::ostream &operator<<(std::ostream &out, const Form &form) {
 
 }
 
-std::string Form::getName(void) const {
+std::string AForm::getName(void) const {
     return name;
 }
 
-bool Form::getIsSigned(void) const {
+bool AForm::getIsSigned(void) const {
     return is_signed;
 }
 
-int Form::getGradeToSign(void) const {
+int AForm::getGradeToSign(void) const {
     return grade_to_sign;
 }
 
-int Form::getGradeToExecute(void) const {
+int AForm::getGradeToExecute(void) const {
     return grade_to_execute;
 }
 
-const char* Form::GradeTooHighException::what() const throw() {
+const char* AForm::GradeTooHighException::what() const throw() {
     return "grade is too high";
 }
 
-const char* Form::GradeTooLowException::what() const throw() {
+const char* AForm::GradeTooLowException::what() const throw() {
     return "grade is too low";
 }
 
-const char* Form::AlreadySigned::what() const throw() {
+const char* AForm::AlreadySignedException::what() const throw() {
     return "form has already been signed";
 }
 
-void Form::beSigned(const Bureaucrat &signer){
+void AForm::beSigned(const Bureaucrat &signer){
     if (this->is_signed)
-        throw AlreadySigned();
+        throw AlreadySignedException();
     if (signer.getGrade() <= this->grade_to_sign)
         this->is_signed = true;
     else

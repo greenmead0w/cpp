@@ -6,7 +6,7 @@
 
 class Bureaucrat; //to avoid circular dependency ("form needing bureaucrat and viceversa")
 
-class Form {
+class AForm {
 
     private:
         const std::string name;
@@ -15,13 +15,14 @@ class Form {
         const int grade_to_execute;
 
     public:
-        Form(void);
-        Form(const Form &cpy);
-        Form(std::string name, int signGrade, int execGrade);
-        ~Form(void);
-        Form &operator=(const Form &cpy);
+        AForm(void);
+        AForm(const AForm &cpy);
+        AForm(std::string name, int signGrade, int execGrade);
+        virtual ~AForm(void);
+        AForm &operator=(const AForm &cpy);
 
         void beSigned(const Bureaucrat &signer);
+        virtual void		execute(const Bureaucrat &executor) const = 0; //NEW
         
         //getters
         std::string getName(void) const;
@@ -46,8 +47,13 @@ class Form {
                 const char* what() const throw();
 
         };
+
+        class UnsignedFormException : public std::exception {
+            public:
+                virtual const char* what() const throw();
+        };
 };
 
-std::ostream &operator<<(std::ostream &out, const Form &form);
+std::ostream &operator<<(std::ostream &out, const AForm &form);
 
 #endif
