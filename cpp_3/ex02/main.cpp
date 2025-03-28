@@ -5,44 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzuloaga <mzuloaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/07 09:25:31 by mzuloaga          #+#    #+#             */
-/*   Updated: 2025/03/07 09:25:48 by mzuloaga         ###   ########.fr       */
+/*   Created: 2025/03/07 09:26:08 by mzuloaga          #+#    #+#             */
+/*   Updated: 2025/03/07 09:26:20 by mzuloaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "ScavTrap.h"
+#include "FragTrap.h"
 
 int main(void)
 {
+    ClapTrap og("I'M OG");
+    std::cout << "----------------\n";
     ScavTrap roomba;
     std::cout << "----------------\n";
-    ClapTrap robot("CPP-03");
+    FragTrap ultron;
     std::cout << "-----------------\n";
-    ScavTrap walle(roomba);
+    FragTrap walle(ultron);
     std::cout << "-----------------\n";
-    ScavTrap r2d2("r2d2");
+    FragTrap r2d2("r2d2");
     std::cout << "-----------------\n";
-    std::cout << r2d2.getName() << ": ";
+    std::cout << "ScavTrap: " << r2d2.getName() << ": ";
     std::cout << r2d2.getHitPoints() << " | " << r2d2.getEnergyPoints() << " | ";
     std::cout << r2d2.getDamage() << std::endl;
     std::cout << "--------------------\n";
-    std::cout << roomba.getName() << std::endl;
-    std::cout << walle.getName() << std::endl;
+    std::cout << roomba.getName() << ": ";
+    std::cout << roomba.getHitPoints() << " | " << roomba.getEnergyPoints() << " | ";
+    std::cout << roomba.getDamage() << std::endl;
     std::cout << "--------------------\n";
-    walle.setName("Walle");
-    walle.attack("Norminette");
-    robot.attack("Enemy Bot");
-    std::cout << "-----------------\n";
-    r2d2 = walle;
-    std::cout << r2d2.getName() << std::endl;
-    std::cout << "------------------\n";
-    // roomba = robot; //not working because no overload for 2 diff classes
-    roomba.beRepaired(3);
-    std::cout << "-----------------\n";
-    walle.takeDamage(10);
-    std::cout << "-----------------\n";
-
+    std::cout << og.getName() << ": ";
+    std::cout << og.getHitPoints() << " | " << og.getEnergyPoints() << " | ";
+    std::cout << og.getDamage() << std::endl;
+    std::cout << "--------------------\n";
+    og.attack("ONE");
+    roomba.attack("TWO");
+    ultron.attack("THREE");
+    std::cout << "--------------------\n";
+    //og.guardGate(); //no member named like this
+    roomba.guardGate();
+    ultron.highFivesGuys();
+    std::cout << "--------------------\n";
 
     return 0;
 }

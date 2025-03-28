@@ -1,9 +1,9 @@
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp Fixed.cpp
+SRC = main.cpp AMateria.cpp Character.cpp Cure.cpp Ice.cpp ICharacter.cpp
 OBJ = $(SRC:.cpp=.o)
-INCLUDES = Fixed.hpp
-NAME = program
+INCLUDES = AMateria.h Character.h Cure.h Ice.h ICharacter.h IMateriaSource.h
+NAME = polymorphism_bonus
 
 # explicit rule to use my compiler and flags (if not stated it uses g++)
 %.o: %.cpp
@@ -21,5 +21,3 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-
-.PHONY: all clean fclean re

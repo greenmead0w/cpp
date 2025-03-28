@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mzuloaga <mzuloaga@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 09:25:29 by mzuloaga          #+#    #+#             */
+/*   Updated: 2025/03/07 09:28:07 by mzuloaga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 
 #ifndef CLAPTRAP_H
@@ -7,7 +19,7 @@
 #include <iostream>
 
 class ClapTrap {
-    private:
+    protected:
         std::string name;
         unsigned int hit_points;
         unsigned int energy_points;

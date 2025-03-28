@@ -5,17 +5,17 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mzuloaga <mzuloaga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/07 09:25:04 by mzuloaga          #+#    #+#              #
-#    Updated: 2025/03/07 09:25:07 by mzuloaga         ###   ########.fr        #
+#    Created: 2025/03/07 09:26:10 by mzuloaga          #+#    #+#              #
+#    Updated: 2025/03/07 09:26:22 by mzuloaga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp ClapTrap.cpp
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 OBJ = $(SRC:.cpp=.o)
-INCLUDES = ClapTrap.h
-NAME = claptrap
+INCLUDES = ClapTrap.h ScavTrap.h FragTrap.h
+NAME = fragtrap
 
 # explicit rule to use my compiler and flags (if not stated it uses g++)
 %.o: %.cpp

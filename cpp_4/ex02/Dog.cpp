@@ -1,6 +1,6 @@
 #include "Dog.h"
 
-Dog::Dog(void) : Animal() {
+Dog::Dog(void) : AAnimal() {
     std::cout << "Dog class. Default constructor called\n";
     type = "I'm a dog";
     brain = new Brain(); //dynamic alloc of new Brain
