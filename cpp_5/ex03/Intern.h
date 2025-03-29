@@ -5,18 +5,18 @@
 #include "PresidentialPardonForm.h"
 #include "RobotomyRequestForm.h"
 #include "ShrubberyCreationForm.h"
+#include "AForm.h"
 
 class Intern {
 
 	private:
 		AForm *createShrubberyForm(std::string target);
-		AForm *createRobotomyRequestForm(std::string target);
+		AForm *createRobotomyForm(std::string target);
 		AForm *createPresidentialPardonForm(std::string target);
 
 	public:
 		Intern(void);
 		Intern(const Intern &cpy);
-		Intern(std::string target);
 		~Intern(void);
 		Intern &operator=(const Intern &cpy);
 
@@ -25,7 +25,7 @@ class Intern {
 		class MissingFormType : public std::exception {
 			public:
 				const char* what() const throw();
-		}
+		};
 	
 
 };

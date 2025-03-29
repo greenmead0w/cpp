@@ -25,7 +25,7 @@ AForm* Intern::createShrubberyForm(std::string target) {
     return new ShrubberyCreationForm(target);
 }
 
-AForm* Intern::createRobotomyRqForm(std::string target) {
+AForm* Intern::createRobotomyForm(std::string target) {
     return new RobotomyRequestForm(target);
 }
 
@@ -33,23 +33,27 @@ AForm* Intern::createPresidentialPardonForm(std::string target) {
     return new PresidentialPardonForm(target);
 }
 
+const char* Intern::MissingFormType::what() const throw() {
+    return "No form type found";
+}
+
 AForm *Intern::makeForm(std::string form_type, std::string target) {
 	
 	std::string formTypeArr[] = {"shrubbery creation", "robotomy request", "presidential pardon"};
-	//create array of pointers to functions that return new form objects
-	AForm * funcPtrArr = {
-		&Intern::createShrubberyForm,
-        &Intern::createRobotomyForm,
-        &Intern::createPresidentialPardonForm
-	}
+	AForm *form = NULL;
 
 	for (int i = 0; i < 3; i++)
 	{
 		if (form_type == formTypeArr[i])
 		{
-			AForm *form = funcPtrArr[i]
-			std::cout << "Intern creates " << name << " form" << std::endl;
-			return form;
+			switch(i) 
+			{
+                case 0: form = this->createShrubberyForm(target); break;
+                case 1: form = this->createRobotomyForm(target); break;
+                case 2: form = this->createPresidentialPardonForm(target); break;
+            }
+            std::cout << "Intern creates " << form_type << " form" << std::endl;
+            return form;
 		}
 	}
 	throw MissingFormType();
