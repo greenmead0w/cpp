@@ -3,6 +3,7 @@
 #define SHRUBBERYCREATIONFORM_HPP
 
 #include "AForm.h"
+#include <fstream>
 
 
 class ShrubberyCreationForm : public AForm {

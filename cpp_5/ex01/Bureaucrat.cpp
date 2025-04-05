@@ -82,7 +82,7 @@ void Bureaucrat::signForm(Form &form) {
         std::cerr << "Bureaucrat " << this->getName();
         std::cerr << " couldn't sign " << form.getName();
         std::cerr << " form because " << e.what() << std::endl;
-        //throw Form::GradeTooLowException();
+        throw;
     }
 
 }

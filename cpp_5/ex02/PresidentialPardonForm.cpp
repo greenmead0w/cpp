@@ -9,7 +9,7 @@ PresidentialPardonForm::PresidentialPardonForm(void)
 }
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &cpy)
-	:	AForm("PresidentialPardonForm", 25, 5),
+	:	AForm("PresidentialPardonForm", 25, 5)
 {
 	this->target = cpy.target;
 	std::cout << "PresidentialPardonForm copy constructor\n";
@@ -29,7 +29,6 @@ PresidentialPardonForm::~PresidentialPardonForm(void) {
 PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPardonForm &cpy) {
 
     if (this != &cpy)
-        this->is_signed = cpy.is_signed;
 		this->target = cpy.target;
 
     return *this;

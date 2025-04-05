@@ -4,9 +4,9 @@
 #include <iostream>
 #include <string>
 #include <exception>
-#include "Form.h"
+#include "AForm.h"
 
-class Form;
+class AForm;
 
 class Bureaucrat {
     private:
@@ -25,7 +25,7 @@ class Bureaucrat {
         void decrementGrade(void);
 
         //ex01
-        void signForm(Form &form);
+        void signForm(AForm &form);
 
         //ex02
         void			executeForm(const AForm &form);	

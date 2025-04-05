@@ -1,65 +1,90 @@
 
 #include "Bureaucrat.h"
+#include "PresidentialPardonForm.h"
+#include "RobotomyRequestForm.h"
+#include "ShrubberyCreationForm.h"
 
 int main()
 {
-    //correct 1
+    //Correct 1
     try {
         Bureaucrat mikel("Mikel", 10);
-        std::cout << mikel << std::endl;
-        Form form_1;
-        std::cout << form_1 << std::endl;
-        mikel.signForm(form_1);
-        std::cout << "[IS_SIGNED]: " << form_1.getIsSigned() << std::endl;
-    } catch (std::exception &e){ //as exception is polymorphic compiler knows it needs to call derived class what function
-        std::cerr << "Exception caugth: " << e.what() << std::endl;
-    }
-
-    std::cout << "\n--------------------\n";
-
-    //correct 2
-    try {
-        Bureaucrat mikel("Mikel", 10);
-        std::cout << mikel << std::endl;
-        Form form_1("traffic fine", 100, 25);
-        Form form_2(form_1);
-        std::cout << form_2 << std::endl;
-        Form form_3;
-        form_3 = form_1;
-        std::cout << form_3 << std::endl;
+        ShrubberyCreationForm shrub("tree");
+        std::cout << shrub << std::endl;
+        mikel.signForm(shrub);
+        std::cout << "[IS_SIGNED]: " << shrub.getIsSigned() << std::endl;
+        mikel.executeForm(shrub);
     } catch (std::exception &e){ 
         std::cerr << "Exception caugth: " << e.what() << std::endl;
     }
 
     std::cout << "\n--------------------\n";
 
-    //incorrect 1: GradeTooLowException
+    //Correct 2
+    // try {
+    //     Bureaucrat mikel("Mikel", 10);
+    //     RobotomyRequestForm robo("roboto");
+    //     std::cout << robo << std::endl;
+    //     mikel.signForm(robo);
+    //     std::cout << "[IS_SIGNED]: " << robo.getIsSigned() << std::endl;
+    //     std::cout << "--------------------\n";
+    //     mikel.executeForm(robo);
+    // } catch (std::exception &e){ 
+    //     std::cerr << "Exception caugth: " << e.what() << std::endl;
+    // }
 
-    // Bureaucrat mikel("Mikel", 150);
-    // Form form("launch-nuclear-weapon", 1, 1);
-    // mikel.signForm(form);
-    // std::cout << "is form signed? " << form.getIsSigned() << std::endl;
     // std::cout << "\n--------------------\n";
 
-    //incorrect 2: AlreadySigned
-    // Bureaucrat mikel("Mikel", 1);
-    // Form form("launch-nuclear-weapon", 1, 1);
-    // mikel.signForm(form);
-    // std::cout << "is form signed? " << form.getIsSigned() << std::endl;
-    // mikel.signForm(form);
+    //Correct 3
+    // try {
+    //     Bureaucrat mikel("Mikel", 1);
+    //     PresidentialPardonForm presi;
+    //     std::cout << robo << std::endl;
+    //     mikel.signForm(robo);
+    //     std::cout << "[IS_SIGNED]: " << robo.getIsSigned() << std::endl;
+    //     std::cout << "--------------------\n";
+    //     mikel.executeForm(robo);
+    // } catch (std::exception &e){ 
+    //     std::cerr << "Exception caugth: " << e.what() << std::endl;
+    // }
+
     // std::cout << "\n--------------------\n";
 
-    //incorrect 3: Wrong grade at object instantiation
-    try {
-        Bureaucrat mikel("Mikel", 5);
-        std::cout << mikel << std::endl;
-        Form form_1("traffic fine", -100, 25);
-        std::cout << form_1 << std::endl;
-    } catch (std::exception &e){ 
-        std::cerr << "Exception caugth: " << e.what() << std::endl;
-    }
-    std::cout << "\n--------------------\n";
+    //incorrect 1 - execute form before signing
+    // try {
+    //     Bureaucrat mikel("Mikel", 10);
+    //     ShrubberyCreationForm shrub("tree");
+    //     std::cout << shrub << std::endl;
+    //     mikel.executeForm(shrub);
+    // } catch (std::exception &e) {
+    //     std::cerr << "Exception caugth: " << e.what() << std::endl;       
+    // }
+    // std::cout << "\n--------------------\n";
 
+    //incorrect 2 -- presidential pardon, have permits to sign, not to execute
+    // try {
+    //     Bureaucrat mikel("Mikel", 10);
+    //     PresidentialPardonForm presi;
+    //     std::cout << presi << std::endl;
+    //     mikel.signForm(presi);
+    //     mikel.executeForm(presi);
+    // } catch (std::exception &e) {
+    //     std::cerr << "Exception caugth: " << e.what() << std::endl;
+    // }
+    //  std::cout << "\n--------------------\n";
+
+    //incorrect 3 -- document already signed
+    // try {
+    //     Bureaucrat mikel("Mikel", 10);
+    //     Bureaucrat b;
+    //     RobotomyRequestForm robo;
+    //     std::cout << robo << std::endl;
+    //     mikel.signForm(robo);
+    //     b.signForm(robo);
+    //     mikel.executeForm(robo);
+    // } catch (std::exception &e) {
+    //     std::cerr << "Exception caugth: " << e.what() << std::endl;
+    // }
    
     return 0;
 }
