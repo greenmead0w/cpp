@@ -1,9 +1,9 @@
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp ScalarConverter.cpp
+SRC = main.cpp 
 OBJ = $(SRC:.cpp=.o)
-INCLUDES = ScalarConverter.h
-NAME = convert
+INCLUDES = iter.h
+NAME = templates
 
 #explicit rule to use my compiler and flags (if not stated it uses g++)
 %.o: %.cpp
