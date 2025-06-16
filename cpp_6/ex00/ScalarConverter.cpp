@@ -1,12 +1,13 @@
 
-#include "ScalarConverter.h"
+#include "ScalarConverter.hpp"
 #include <cctype> //isdigit, isprint
 #include <cstring> //strlen
 #include <cstdlib> //strtol, strtod, strtof
 #include <climits> //CHAR_MIN, CHAR_MAX, INT_MIN, INT_MAX
+#include <cfloat> //FLT_MAX, FLT_MIN
 
 
-static ScalarConverter::numType ScalarConverter::detect_type(const char *input)
+ScalarConverter::numType ScalarConverter::detect_type(const char *input)
 {
 	std::string str = input;
 	char *endptr;
@@ -44,7 +45,7 @@ static ScalarConverter::numType ScalarConverter::detect_type(const char *input)
 
 }
 
-static void ScalarConverter::printChar(const double i)
+void ScalarConverter::printChar(const double i)
 {
 	std::cout << "char: ";
     if (i < CHAR_MIN || i > CHAR_MAX)
@@ -56,7 +57,7 @@ static void ScalarConverter::printChar(const double i)
 
 }
 
-static void ScalarConverter::convertFromChar(const char *input)
+void ScalarConverter::convertFromChar(const char *input)
 {
 	char c;
 	if (std::strlen((input)) == 1)
@@ -72,7 +73,7 @@ static void ScalarConverter::convertFromChar(const char *input)
 	std::cout << "double: " << static_cast<double>(c) << ".0" << std::endl;
 }
 
-static void ScalarConverter::convertFromInt(const char *input)
+void ScalarConverter::convertFromInt(const char *input)
 {
 	long l;
 	char *endptr;
@@ -96,7 +97,7 @@ static void ScalarConverter::convertFromInt(const char *input)
 
 }
 
-static void ScalarConverter::convertFromFloat(const char *input)
+void ScalarConverter::convertFromFloat(const char *input)
 {
 	float f;
     char *endptr;
@@ -128,7 +129,7 @@ static void ScalarConverter::convertFromFloat(const char *input)
 }
 
 
-static void ScalarConverter::convertFromDouble(const char *input)
+void ScalarConverter::convertFromDouble(const char *input)
 {
 	double d;
     char *endptr;
@@ -162,7 +163,7 @@ static void ScalarConverter::convertFromDouble(const char *input)
 
 }
 
-static void ScalarConverter::convertFromPseudoFloat(const char *input) {
+void ScalarConverter::convertFromPseudoFloat(const char *input) {
     std::string pseudoFloat = input;
     
     // Handle the special pseudo-literals for float
@@ -182,7 +183,7 @@ static void ScalarConverter::convertFromPseudoFloat(const char *input) {
         std::cout << "-inf" << std::endl;
 }
 
-static void ScalarConverter::convertFromPseudoDouble(const char *input) {
+void ScalarConverter::convertFromPseudoDouble(const char *input) {
     std::string pseudoDouble = input;
     
     // Handle the special pseudo-literals for double
@@ -202,7 +203,7 @@ static void ScalarConverter::convertFromPseudoDouble(const char *input) {
     std::cout << "double: " << pseudoDouble << std::endl;
 }
 
-static void ScalarConverter::convert(const char *input)
+void ScalarConverter::convert(const char *input)
 {
 	numType _type = detect_type(input);
 
@@ -225,11 +226,11 @@ static void ScalarConverter::convert(const char *input)
 			break;
 
 		case TYPE_PSEUDO_DOUBLE:
-			convertFromPseudo(input):
+			convertFromPseudoDouble(input);
 			break;
 
 		case TYPE_PSEUDO_FLOAT:
-			convertFromPseudo(input):
+			convertFromPseudoFloat(input);
 			break;
 
 		case TYPE_UNKNOWN:

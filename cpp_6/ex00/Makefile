@@ -2,7 +2,7 @@ CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = main.cpp ScalarConverter.cpp
 OBJ = $(SRC:.cpp=.o)
-INCLUDES = ScalarConverter.h
+INCLUDES = ScalarConverter.hpp
 NAME = convert
 
 #explicit rule to use my compiler and flags (if not stated it uses g++)

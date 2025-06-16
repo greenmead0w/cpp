@@ -1,6 +1,10 @@
 #ifndef SCALARCONVERTER_HPP
 #define SCALARCONVERTER_HPP
 
+#include <iostream>
+#include <string>
+#include <exception>
+
 
 class ScalarConverter {
     private:
@@ -18,7 +22,7 @@ class ScalarConverter {
         ScalarConverter &operator=(const ScalarConverter &cpy);
 
         //functions
-        static numType detect_type(const std::string &input);
+        static numType detect_type(const char *input);
 
 
 
@@ -26,10 +30,13 @@ class ScalarConverter {
         ~ScalarConverter(void);
 
         static void convert(const char *input);
-        static void printChar(const int i);
+        static void printChar(const double d);
         static void convertFromChar(const char *input);
         static void convertFromInt(const char *input);
         static void convertFromFloat(const char *input);
+        static void convertFromDouble(const char *input);
+        static void convertFromPseudoFloat(const char *input);
+        static void convertFromPseudoDouble(const char *input);
 
     	class NotPrintableException : public std::exception {
 			public:
