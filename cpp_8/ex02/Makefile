@@ -1,9 +1,9 @@
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp Span.cpp
+SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
-INCLUDES = Span.hpp
-NAME = span
+INCLUDES = MutantStack.hpp
+NAME = mutant
 
 #explicit rule to use my compiler and flags (if not stated it uses g++)
 %.o: %.cpp

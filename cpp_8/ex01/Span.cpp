@@ -4,7 +4,7 @@ Span::Span() : max_len(3) {std::cout << "default constructor called\n";}
 
 Span::Span(unsigned int n) : max_len(n) {std::cout << "parametrized constructor called\n";}
 
-Span::Span(const Span &cpy) : data(cpy.data), max_len(cpy.max_len) {std::cout <<"copy constructor called\n";}
+Span::Span(const Span &cpy) : max_len(cpy.max_len), data(cpy.data) {std::cout <<"copy constructor called\n";}
 
 Span::~Span() {std::cout << "destructor called\n";}
 

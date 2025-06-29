@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <iterator> //for std::distance
 #include <exception>
 
 
@@ -29,7 +30,7 @@ class Span {
             data.insert(data.end(), begin, end);
 }
 
-}
+};
 
 
 #endif
