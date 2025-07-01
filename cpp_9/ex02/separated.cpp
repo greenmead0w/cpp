@@ -39,8 +39,8 @@ private:
         return low; // 'low' is the insertion point where value should be placed
     }
 
-    template<typename Container>
-    void fordJohnsonSort(Container& c) {
+void fordJohnsonSortVector(std::vector<int>& c) 
+{
         if (c.size() <= 1)
             return;
 
@@ -57,15 +57,15 @@ private:
                 indexedPairs.push_back(std::make_pair(std::make_pair(c[i + 1], c[i]), i / 2));
         }
 
-        // we only need the smallest winner to find the first loser
+        // Extract winners for recursive sorting
         std::vector<int> winners;
         for (size_t i = 0; i < indexedPairs.size(); ++i) {
             winners.push_back(indexedPairs[i].first.first);
         }
-        fordJohnsonSort(winners); // Recursively sort the winner values
+        fordJohnsonSortVector(winners); // Recursively sort the winner values
 
         // Build main chain starting with sorted winners
-        Container mainChain;
+        std::vector<int> mainChain;
         for(size_t i = 0; i < winners.size(); ++i) {
             mainChain.push_back(winners[i]);
         }
@@ -92,31 +92,107 @@ private:
         inserted[firstLoserPairIdx] = true;
 
         // 2. Insert remaining losers in simple sequential order
-        // This is less optimal than Jacobsthal sequence but much simpler
         for (size_t i = 0; i < indexedPairs.size(); ++i) {
             if (!inserted[i]) {
                 int loser = indexedPairs[i].first.second;
                 int winner = indexedPairs[i].first.first;
 
                 // Find position of winner in main chain
-                typename Container::iterator winnerPos = std::find(mainChain.begin(), mainChain.end(), winner);
+                std::vector<int>::iterator winnerPos = std::find(mainChain.begin(), mainChain.end(), winner);
 
                 // Insert loser before its winner using binary search
-                typename Container::iterator insertPos = binarySearchInsert(mainChain.begin(), winnerPos, loser);
+                std::vector<int>::iterator insertPos = binarySearchInsert(mainChain.begin(), winnerPos, loser);
                 mainChain.insert(insertPos, loser);
 
                 inserted[i] = true;
             }
         }
 
-        // 4. Insert odd if exists
+        // 3. Insert odd element if exists
         if (hasOdd) {
-            typename Container::iterator insertPos = binarySearchInsert(mainChain.begin(), mainChain.end(), oddElement);
+            std::vector<int>::iterator insertPos = binarySearchInsert(mainChain.begin(), mainChain.end(), oddElement);
             mainChain.insert(insertPos, oddElement);
         }
 
         c = mainChain; // Replace the original container with the sorted one
+}
+
+void fordJohnsonSortDeque(std::deque<int>& c) {
+    if (c.size() <= 1)
+        return;
+
+    // Store pairs along with their original index to find the first loser later
+    std::vector<std::pair<std::pair<int, int>, size_t> > indexedPairs;
+    bool hasOdd = c.size() % 2 == 1;
+    int oddElement = hasOdd ? c.back() : -1;
+
+    for (size_t i = 0; i + 1 < c.size(); i += 2) {
+        // Store pair (winner, loser) and its pair index
+        if (c[i] > c[i + 1])
+            indexedPairs.push_back(std::make_pair(std::make_pair(c[i], c[i + 1]), i / 2));
+        else
+            indexedPairs.push_back(std::make_pair(std::make_pair(c[i + 1], c[i]), i / 2));
     }
+
+    // Extract winners for recursive sorting
+    std::deque<int> winners;
+    for (size_t i = 0; i < indexedPairs.size(); ++i) {
+        winners.push_back(indexedPairs[i].first.first);
+    }
+    fordJohnsonSortDeque(winners); // Recursively sort the winner values
+
+    // Build main chain starting with sorted winners
+    std::deque<int> mainChain;
+    for(size_t i = 0; i < winners.size(); ++i) {
+        mainChain.push_back(winners[i]);
+    }
+
+    // Keep track of which original pair indices have had their losers inserted
+    std::vector<bool> inserted(indexedPairs.size(), false);
+
+    // --- Simplified Insertion Phase ---
+
+    // 1. Insert the first loser (paired with the smallest winner)
+    int smallestWinner = winners[0];
+    size_t firstLoserPairIdx = 0;
+    int firstLoserValue = -1;
+
+    for (size_t i = 0; i < indexedPairs.size(); ++i) {
+        if (indexedPairs[i].first.first == smallestWinner) {
+                firstLoserPairIdx = indexedPairs[i].second;
+                firstLoserValue = indexedPairs[i].first.second;
+            break;
+        }
+    }
+
+    mainChain.insert(mainChain.begin(), firstLoserValue);
+    inserted[firstLoserPairIdx] = true;
+
+    // 2. Insert remaining losers in simple sequential order
+    for (size_t i = 0; i < indexedPairs.size(); ++i) {
+        if (!inserted[i]) {
+            int loser = indexedPairs[i].first.second;
+            int winner = indexedPairs[i].first.first;
+
+            // Find position of winner in main chain
+            std::deque<int>::iterator winnerPos = std::find(mainChain.begin(), mainChain.end(), winner);
+
+            // Insert loser before its winner using binary search
+            std::deque<int>::iterator insertPos = binarySearchInsert(mainChain.begin(), winnerPos, loser);
+            mainChain.insert(insertPos, loser);
+
+            inserted[i] = true;
+        }
+    }
+
+    // 3. Insert odd element if exists
+    if (hasOdd) {
+        std::deque<int>::iterator insertPos = binarySearchInsert(mainChain.begin(), mainChain.end(), oddElement);
+        mainChain.insert(insertPos, oddElement);
+    }
+
+    c = mainChain; // Replace the original container with the sorted one
+}
 
 
 public:
@@ -209,13 +285,13 @@ public:
         // Sort with std::vector
         std::vector<int> vectorCopy = _numbers;
         double startTimeVector = getCurrentTime();
-        fordJohnsonSort(vectorCopy); // Use the template function
+        fordJohnsonSortVector(vectorCopy); // Use the template function
         double vectorTime = getCurrentTime() - startTimeVector;
 
         // Sort with std::deque
         std::deque<int> dequeCopy(_numbers.begin(), _numbers.end());
         double startTimeDeque = getCurrentTime();
-        fordJohnsonSort(dequeCopy); // Use the template function
+        fordJohnsonSortDeque(dequeCopy); // Use the template function
         double dequeTime = getCurrentTime() - startTimeDeque;
 
         // Display sorted sequence (can use either vectorCopy or dequeCopy)
