@@ -10,12 +10,13 @@
 #include <cstdio> //for sscanf
 #include <exception> //throw errors
 #include <climits> // for int_max
+#include <iomanip> //for setprecision()
 
 class BitcoinExchange {
 private:
-    std::map<std::string, float> _exchangeRates;
+    std::map<std::string, double> _exchangeRates;
     bool isValidDate(const std::string &date) const;
-    bool isValidValue(const std::string &valueStr, float &value) const;
+    bool isValidValue(const std::string &valueStr, double &value) const;
     std::string getClosestDate(const std::string &date) const;
 
 public:

@@ -28,7 +28,8 @@ BitcoinExchange::BitcoinExchange(const std::string &dbFile) {
         if (std::getline(ss, date, ',') && std::getline(ss, rateStr)) {
             date.erase(date.find_last_not_of(" \t\r\n") + 1);
             rateStr.erase(0, rateStr.find_first_not_of(" \t\r\n"));
-            _exchangeRates[date] = std::atof(rateStr.c_str());
+            _exchangeRates[date] = std::strtod(rateStr.c_str(), NULL);
+            // _exchangeRates[date] = std::atof(rateStr.c_str());
         }
     }
 }
@@ -44,16 +45,24 @@ bool BitcoinExchange::isValidDate(const std::string &date) const {
     return (y >= 2009 && m >= 1 && m <= 12 && d >= 1 && d <= 31);
 }
 
-bool BitcoinExchange::isValidValue(const std::string &valueStr, float &value) const {
+bool BitcoinExchange::isValidValue(const std::string &valueStr, double &value) const {
+    std::string cleanStr = valueStr;
+    
+    // Remove trailing 'f' or 'F' if present
+    if (!cleanStr.empty() && (cleanStr.back() == 'f' || cleanStr.back() == 'F')) {
+        cleanStr.pop_back();
+    }
+    
     char* end;
-    value = std::strtof(valueStr.c_str(), &end);
-    if (*end != '\0' || value < 0)
+
+    value = std::strtod(cleanStr.c_str(), &end);
+    if (*end != '\0' || value <= 0)
         return false;
-    return value <= INT_MAX;
+    return value < 1000.0;
 }
 
 std::string BitcoinExchange::getClosestDate(const std::string &date) const {
-    std::map<std::string, float>::const_iterator it = _exchangeRates.lower_bound(date);
+    std::map<std::string, double>::const_iterator it = _exchangeRates.lower_bound(date);
     if (it != _exchangeRates.end() && it->first == date)
         return date;
     if (it == _exchangeRates.begin()) //it would mean date before entry number 1 in db.
@@ -84,11 +93,11 @@ void BitcoinExchange::processInput(const std::string &inputFile) const {
         date.erase(date.find_last_not_of(" \t\r\n") + 1);
         valueStr.erase(0, valueStr.find_first_not_of(" \t\r\n"));
 
-        float value;
+        double value;
         if (!isValidDate(date)) {
             std::cerr << "Error: bad input => " << date << std::endl;
         } else if (!isValidValue(valueStr, value)) {
-            if (value > INT_MAX)
+            if (value >= 1000.0)
                 std::cerr << "Error: too large a number." << std::endl;
             else
                 std::cerr << "Error: not a positive number." << std::endl;
@@ -98,8 +107,8 @@ void BitcoinExchange::processInput(const std::string &inputFile) const {
                 std::cerr << "Error: no valid earlier date found." << std::endl;
                 continue;
             }
-            float rate = _exchangeRates.find(closest)->second;
-            std::cout << date << " => " << value << " = " << value * rate << std::endl;
+            double rate = _exchangeRates.find(closest)->second;
+            std::cout << date << " => " << value << " = " << std::fixed << std::setprecision(2) << value * rate << std::endl;
         }
     }
 }
