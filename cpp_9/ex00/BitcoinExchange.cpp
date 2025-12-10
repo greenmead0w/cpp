@@ -13,11 +13,12 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &cpy) {
     return *this;
 }
 
+//read data.csv and store cleaned lines in object internal variable
 BitcoinExchange::BitcoinExchange(const std::string &dbFile) {
     //create input file stream object
-    std::ifstream file(dbFile.c_str()); //from string to const char *
+    std::ifstream file(dbFile.c_str()); //from string to const char * because required by ifstream
     if (!file.is_open()) {
-        throw std::runtime_error("Error: could not open file.");
+        throw std::runtime_error("Error: could not open data.csv file.");
     }
 
     std::string line;
@@ -29,7 +30,6 @@ BitcoinExchange::BitcoinExchange(const std::string &dbFile) {
             date.erase(date.find_last_not_of(" \t\r\n") + 1);
             rateStr.erase(0, rateStr.find_first_not_of(" \t\r\n"));
             _exchangeRates[date] = std::strtod(rateStr.c_str(), NULL);
-            // _exchangeRates[date] = std::atof(rateStr.c_str());
         }
     }
 }
@@ -46,23 +46,28 @@ bool BitcoinExchange::isValidDate(const std::string &date) const {
 }
 
 bool BitcoinExchange::isValidValue(const std::string &valueStr, double &value) const {
-    std::string cleanStr = valueStr;
-    
-    // Remove trailing 'f' or 'F' if present
-    if (!cleanStr.empty() && (cleanStr.back() == 'f' || cleanStr.back() == 'F')) {
-        cleanStr.pop_back();
-    }
-    
-    char* end;
+    std::string cleanStr = valueStr; // valueStr is const, need modifiable copy
 
+    //remove trailing 'f' or 'F' if present
+    if (!cleanStr.empty()) {
+        char lastChar = cleanStr[cleanStr.size() - 1];
+        if (lastChar == 'f' || lastChar == 'F') {
+            cleanStr.erase(cleanStr.size() - 1); // remove last char
+        }
+    }
+
+    char* end; // for checking if strtod reaches end of string
     value = std::strtod(cleanStr.c_str(), &end);
-    if (*end != '\0' || value <= 0)
+
+    if (*end != '\0' || value < 0)
         return false;
-    return value < 1000.0;
+
+    return value <= 1000.0;
 }
 
+
 std::string BitcoinExchange::getClosestDate(const std::string &date) const {
-    std::map<std::string, double>::const_iterator it = _exchangeRates.lower_bound(date);
+    std::map<std::string, double>::const_iterator it = _exchangeRates.lower_bound(date); //find first date >= date
     if (it != _exchangeRates.end() && it->first == date)
         return date;
     if (it == _exchangeRates.begin()) //it would mean date before entry number 1 in db.
@@ -74,8 +79,7 @@ std::string BitcoinExchange::getClosestDate(const std::string &date) const {
 void BitcoinExchange::processInput(const std::string &inputFile) const {
     std::ifstream file(inputFile.c_str());
     if (!file.is_open()) {
-        std::cerr << "Error: could not open file." << std::endl;
-        //throw std::runtime_error("Error: could not open file.");
+        std::cerr << "Error: could not open user provided file." << std::endl;
         return;
     }
 
@@ -87,7 +91,7 @@ void BitcoinExchange::processInput(const std::string &inputFile) const {
 
         if (!std::getline(ss, date, '|') || !std::getline(ss, valueStr)) {
             std::cerr << "Error: bad input => " << line << std::endl;
-            continue;
+            continue; //error in 1 line doesn't stop program
         }
 
         date.erase(date.find_last_not_of(" \t\r\n") + 1);
@@ -97,10 +101,10 @@ void BitcoinExchange::processInput(const std::string &inputFile) const {
         if (!isValidDate(date)) {
             std::cerr << "Error: bad input => " << date << std::endl;
         } else if (!isValidValue(valueStr, value)) {
-            if (value >= 1000.0)
+            if (value > 1000.0)
                 std::cerr << "Error: too large a number." << std::endl;
             else
-                std::cerr << "Error: not a positive number." << std::endl;
+                std::cerr << "Error: not a positive number." << std::endl; //also throws this error if value is non-digit
         } else {
             std::string closest = getClosestDate(date);
             if (closest.empty()) {
